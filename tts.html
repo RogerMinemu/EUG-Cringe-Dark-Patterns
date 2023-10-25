@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<head>
+<title>Texto a Voz con API Web Speech</title>
+</head>
+<body>
+
+<input type="text" id="text-input" placeholder="Input" />
+<button onclick="speak()">Hablar</button>
+
+<script>
+    function speak() {
+        var text = document.getElementById('text-input').value;
+        var utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
+    }
+</script>
+
+</body>
+</html>

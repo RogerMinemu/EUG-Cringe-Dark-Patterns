@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+
+    <meta charset="utf-8">
+    <title>Roger Portfolio</title>
+      
+    <!-- Bootstrap core -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    
+    <!-- Fuentes -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Circulos animados % -->
+    <link rel="stylesheet" href="css/circle.css">
+
+    <!-- Stylesheet -->
+    <link href="css/css.css" rel="stylesheet">    
+  </head>
+
+    
+  <body id="page-top">
+    <!-- Menu -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Roger Lebrón</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#quiensoy">Quien soy</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#skills">Skills</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#timeline">Timeline</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#contact">Contacto</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- header -->
+    <header class="masthead">
+      <div class="container">
+        <div class="intro-text">
+          <div class="intro-lead-in">Developer</div>
+          <div class="intro-heading text-uppercase">ROGER LEBRÓN</div>
+                           <!-- Bait and Switch -->
+          <a class="btn btn-primary btn-xl text-uppercase" href="https://updatefaker.com/windows11/index.html" target="_blank" onclick="alert('¡Te has suscrito a nuestro boletín semanal!');">Conóceme</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- presentation -->
+    <section class="bg-light" id="quiensoy">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">¿Quién soy?</h2>
+          </div>
+        </div>
+        <div class="row"> <!-- 4img-8txt !-->
+            <!-- pendent de provar al mòbil -->
+            <div class="col-lg-4 text-center">
+                <img class="mx-auto rounded-circle" src="img/roger.png" id="presentationimg" size="2">
+            </div>
+            
+            <div class="col-lg-8 mx-auto">
+                <p class="large text-muted" align="justify">
+                    Mi historia empieza cuando a penas sabia hablar, pues mi padre era muy aficionado a la tecnología y fue quien me enseño a usar un ordenador con apenas 3 años. Fui creciendo y me daba cuenta de que habia nacido para esto. Con apenas 11 años administré mi primer servidor y en él, diversos servicios como; servicios web, servidor email y un MySQL. Nada más acabar la ESO decidí lanzarme a los estudios de los ciclos formativos, haciendo en 2015 el CFGM de microinformática y redes. Allí aprendí CSS, HTML, PHP y Javascript. Ahora curso un CFGS de desarrollo de aplicaciones web y bioinformática.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mx-auto">
+                <p class="large text-muted" align="justify">
+                    En 2015 empezó mi vida laboral en Banco Farmaceutico como administrador de sistemas y en algunas ocasiones desarrollando soluciones en jasper Reports. Dos años más tarde comenzaría mi carrera en Atomian, empezando como tester, hasta la actualidad, en desarrollo de software.
+                </p>
+            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ofertas Especiales  /  Misdirection Dark Pattern -->
+<section class="special-offers">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2 class="section-heading text-uppercase">Ofertas Especiales</h2>
+        <button id="close-offers" class="btn btn-danger">Cerrar</button>
+      </div>
+    </div>
+    <div class="row">
+    </div>
+  </div>
+</section>
+
+<!-- Botón de suscripción trampa  /  Continuidad Forzosa  -->
+<div id="sneaky-subscribe-button" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 100;">
+  <button class="btn btn-primary" onclick="hideButton(); alert('¡Te has suscrito a nuestro boletín semanal!');">Suscríbete ahora</button>
+</div>
+
+<!-- Script para manejar el botón de cierre y la suscripción trampa -->
+<script type="text/javascript">
+  document.getElementById('close-offers').addEventListener('click', function() {
+    document.querySelector('.special-offers').style.display = 'none';
+    document.getElementById('sneaky-subscribe-button').style.display = 'block';
+  });
+
+  // Función para ocultar el botón al hacer clic
+  function hideButton() {
+    document.getElementById('sneaky-subscribe-button').style.display = 'none';
+  }
+</script>
+
+<div id="subscription-panel">
+  <h2>Suscríbete a nuestro boletín</h2>
+  <button onclick="subscribe()">Suscribir</button>
+</div>
+
+<!-- Roach Motel -->
+<div id="unsubscription-panel" style="display:none;">
+  <h2>¿Quieres desuscribirte?</h2>
+  <p>Para desuscribirte, por favor llama a nuestro número de servicio al cliente: 123-456-7890</p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+<!-- CSS (styles.css) -->
+
+
+<!-- JavaScript (script.js) -->
+
+
+
+    <!-- skills (pendent de fer un align "molón")-->
+    <!-- en la row, fem elements de 2 columnes -->
+    <section id="skills">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">SKILLS</h2>
+          </div>
+        </div>
+        <div class="row"> <!--  skill's row -->
+          <div class="col-md-2 text-center">
+            <span class="fa-stack fa-4x text-center">
+                <div class="c100 p90">
+                    <span>90%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+            </span>
+            <h4 class="skill">Java</h4>
+          </div>
+          <div class="col-md-2 text-center">
+            <span class="fa-stack fa-4x">
+              <div class="c100 p85">
+                    <span>85%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+              </div>
+            </span>
+            <h4 class="skill">PHP</h4>
+          </div>
+          <div class="col-md-2 text-center">
+            <span class="fa-stack fa-4x">
+              <div class="c100 p80">
+                    <span>80%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+              </div>
+            </span>
+            <h4 class="skill">SQL</h4>
+          </div>
+          <div class="col-md-2 text-center">
+            <span class="fa-stack fa-4x text-center">
+                <div class="c100 p75">
+                    <span>75%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+                </div>
+            </span>
+            <h4 class="skill">CSS</h4>
+          </div>
+          <div class="col-md-2 text-center">
+            <span class="fa-stack fa-4x">
+              <div class="c100 p80">
+                    <span>80%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+              </div>
+            </span>
+            <h4 class="skill">PYTHON</h4>
+          </div>
+          <div class="col-md-2 text-center">
+            <span class="fa-stack fa-4x">
+              <div class="c100 p75">
+                    <span>70%</span>
+                    <div class="slice">
+                        <div class="bar"></div>
+                        <div class="fill"></div>
+                    </div>
+              </div>
+            </span>
+            <h4 class="skill">C</h4>
+          </div>
+        </div>
+      </div>
+    </section>
+      
+    
+    <!-- timeline -->
+    <section id="timeline">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">TIMELINE</h2>
+            <h3 class="section-subheading text-muted">"Mi trayectoria en un instante"</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="timeline">
+              <li>
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="img/eug.png" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>2015-2017</h4>
+                    <h4 class="subheading">CFGM Microinformática y redes - EUG</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Mis estudios en el ciclo formativo de grado medio me enseñaron a administrar redes y servicios, que me abrió puertas al mundo laboral.</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="img/bf-logo.PNG" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>2015-2017</h4>
+                    <h4 class="subheading">HelpDesk BancoFarmacéutico</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">La estancia de dos años como helpdesk en la ONG me hicieron adquirir tanto valores como persona y conocimiento profesional administrando sistemas.</p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="img/atomian-logo.png" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>2017-Actualidad</h4>
+                    <h4 class="subheading">Developer Atomian</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Atomian me ha hecho y hace que crezca como profesional desarrollando tecnologia cognitiva y software de testing.</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="img/eug.png" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>2017-Actualidad</h4>
+                    <h4 class="subheading">CFGS Desarrollo Web y Bioinformática</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">El ciclo formativo de grado superior me está capacitando para crear webs complejas y complementarlas con softwares como; MongoDB, MySQL, Javascript, CSS, Python, Java, entre otros.</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <br><h4>Actualidad</h4>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- projects grid -->
+    <section class="bg-light" id="portfolio">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Portfolio</h2>
+            <h3 class="section-subheading text-muted">Consulta algunos de mis proyectos públicos :)</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-sm-6 portfolio-item">
+            <a class="portfolio-link" href="https://refugiats.cat" target="_blank">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fas fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="img/thumbnails/001-refugiats.PNG">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Refugiats</h4>
+              <p class="text-muted">Web ganadora en el concurso "websalpunt" por la "fundacio.cat". <br> Refugiats, es una web informativa que consciencia al visitante sobre la grave situación en Siria y pretende hacer de nuestro mundo y sitio mejor.</p>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 portfolio-item">
+            <a class="portfolio-link" href="http://appssuperiors.cat" target="_blank">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fas fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="img/thumbnails/002-aelita.PNG">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Aelita AI</h4>
+              <p class="text-muted">Aelita es una inteligencia artificial capaz de mantener una conversación. Su conocimiento se basa en el autoaprendizaje que dispone, que al hablar con personas, aprende. </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Contacto</h2>
+            <h3 class="section-subheading text-muted">Estás a punto de hacer algo grande</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <form id="contactForm" name="sentMessage" novalidate="novalidate">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input class="form-control" id="name" type="text" placeholder="Nombre" required="required" data-validation-required-message="Please enter your name.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" id="email" type="email" placeholder="Correo electrónico" required="required" data-validation-required-message="Please enter your email address.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                  <!-- Campos obligatorios no necesarios Dark pattern-->
+                  <div class="form-group">
+                    <input class="form-control" id="phone" type="tel" placeholder="Num de contacto" required="required" data-validation-required-message="Please enter your phone number.">
+                    <p class="help-block text-danger"></p>
+                </div>
+                
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <textarea class="form-control" id="message" placeholder="Escribe lo que quieras" required="required" data-validation-required-message="Please enter a message."></textarea>
+                    <p class="help-block text-danger"></p>
+                  </div>
+                  <!-- Confirmshaming dark pattern -->
+                <div class="form-group help-block text-danger">
+                  <input type="checkbox" id="newsletter" name="newsletter">
+                  <label for="newsletter">Soy una persona inteligente y quiero recibir noticias (Confirmshaming)</label>
+              </div>
+
+              <!-- Trick Question dark pattern -->
+              <div class="form-group help-block text-danger">
+                <input type="checkbox" id="no_newsletter" name="no_newsletter">
+                <label for="no_newsletter">Creo que quiero perderme las ofertas exclusivas (Trick Question)</label>
+            </div>
+                </div>
+                
+            
+              
+                <div class="clearfix"></div>
+                <div class="col-lg-12 text-center">
+                  <div id="success"></div>
+                  <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Enviar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <span class="footerbar">Sigueme en Twitter @RogerMinemu</span>
+          </div>
+          <div class="col-md-6">
+            <ul class="list-inline social-buttons">
+              <li class="list-inline-item">
+                <a href="https://twitter.com/RogerMinemu">
+                  <i class="fab fa-twitter"></i>
+                </a>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+
+    <!-- js para el form -->
+    <script src="js/style.js"></script>
+  </body>
+
+</html>

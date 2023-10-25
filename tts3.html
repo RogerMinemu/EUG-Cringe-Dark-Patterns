@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monólogo de Chistes con SSML</title>
+</head>
+<body>
+
+<button onclick="speak()">Reproducir Monólogo</button>
+
+<script>
+    async function speak() {
+        var ssml = `
+            <speak>
+                <prosody rate="slow">
+                    ¡Buenas noches a todos! Es un placer estar aquí.
+                    <break time="1s"/>
+                    Saben, siempre me ha fascinado el tema de los agujeros negros... Pero no entiendo por qué se llevan toda la atención, ¡si los agujeros blancos también importan!
+                    <break time="2s"/>
+                    <audio src="https://actions.google.com/sounds/v1/laughter/laughter_and_applause.ogg"></audio>
+                    <break time="2s"/>
+                    Y hablando de espacio, ¿saben cuál es el café más caro del universo? El ex-preso.
+                    <break time="2s"/>
+                    <audio src="https://actions.google.com/sounds/v1/laughter/laughter_and_applause.ogg"></audio>
+                    <break time="2s"/>
+                    Cambiando de tema, el otro día intenté hacer una dieta vegana, pero no pude... ¡es que no encontraba el enchufe para la zanahoria!
+                    <break time="2s"/>
+                    <audio src="https://actions.google.com/sounds/v1/laughter/laughter_and_applause.ogg"></audio>
+                    <break time="2s"/>
+                    ¡Y hablando de vegetales! ¿Qué dijo el tomate a la salsa? ¡No me tritures!
+                    <break time="2s"/>
+                    <audio src="https://actions.google.com/sounds/v1/laughter/laughter_and_applause.ogg"></audio>
+                    <break time="2s"/>
+                    ¿Saben por qué las focas siempre miran siempre hacia arriba? ¡Porque ahí están los focos!
+                    <break time="2s"/>
+                    <audio src="https://actions.google.com/sounds/v1/laughter/laughter_and_applause.ogg"></audio>
+                    <break time="2s"/>
+                    Y aquí va uno de matemáticas: ¿Qué le dice un número par a un número impar? ¡Impar-tidista!
+                    <break time="2s"/>
+                    <audio src="https://actions.google.com/sounds/v1/laughter/laughter_and_applause.ogg"></audio>
+                    <break time="2s"/>
+                    Y antes de irme, ¿saben cuál es el colmo de Aladino? Tener mal genio.
+                    <break time="2s"/>
+                    <audio src="https://actions.google.com/sounds/v1/laughter/laughter_and_applause.ogg"></audio>
+                    <break time="2s"/>
+                    Espero que hayan disfrutado estos chistes tanto como yo. ¡Hasta la próxima!
+                </prosody>
+            </speak>
+        `;
+
+        var response = await fetch('https://europe-west1-deductive-wares-233220.cloudfunctions.net/SSML-to-audio', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                gID: '4dEf',
+                ssml: ssml,
+            }),
+        });
+
+        var data = await response.json();
+        var audioBlob = new Blob([new Uint8Array(data.audioContent, { type: 'audio/mp3' })]);
+        var audioUrl = URL.createObjectURL(audioBlob);
+        var audio = new Audio(audioUrl);
+        audio.play();
+    }
+</script>
+
+</body>
+</html>
