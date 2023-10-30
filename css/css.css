@@ -3,6 +3,21 @@ body {
 	font-family: 'Roboto Slab', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'
 }
 
+#cookie-notice {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    z-index: 1000;
+}
+
+#accept-cookies {
+    margin-left: 10px;
+}
+
 #subscription-panel, #unsubscription-panel {
 	text-align: center;
 	padding: 20px;
@@ -78,6 +93,14 @@ section h3.section-subheading {
 .btn-primary {
 	background-color: #fed136;
 	border-color: #fed136
+}
+
+.btn-rechazar {
+	background-color: green;
+	border-color: #fed136
+}
+
+.btn-aceptar {
 }
 
 .btn-primary:active,
