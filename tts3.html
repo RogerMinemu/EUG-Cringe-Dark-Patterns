@@ -1,102 +1,144 @@
+<!--
+ --     Roger Lebron, David Davia - CREATIVE SSML - 2023 EUG 
+-->
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Monólogo de Chistes con SSML</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-
-    button {
-        font-size: 1.2em;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        background-color: #008CBA;
-        color: white;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-
-    button:hover {
-        background-color: #005f5f;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Monólogo de Chistes con SSML</title> 
+    <link rel="stylesheet" href="csstts3.css">
 </head>
+
 <body>
 
-<button onclick="speak()">Reproducir Monólogo</button>
+    <!-- Button to trigger the "postData()" JavaScript function when clicked -->
+    <button onclick="postData()">Reproducir Monólogo</button>
+    
+    <!-- Container for displaying the response from the API -->
+    <div id="responseContainer">Respuesta de la API:</div>
 
-<script>
-    async function speak() 
-    {
-        var ssml = `
-            <speak>
-                <prosody rate="slow">
-                    ¡Buenas noches a todos! Es un placer estar aquí.
-                    <break time="1s"/>
-                    Saben, siempre me ha fascinado el tema de los agujeros negros... Pero no entiendo por qué se llevan toda la atención, ¡si los agujeros blancos también importan!
-                    <break time="2s"/>
-                    <audio src="https://bigsoundbank.com/UPLOAD/mp3/0475.mp3"></audio>
-                    <break time="2s"/>
-                    Y hablando de espacio, ¿saben cuál es el café más caro del universo? El ex-preso.
-                    <break time="2s"/>
-                    <audio src="https://bigsoundbank.com/UPLOAD/mp3/2097.mp3"></audio>
-                    <break time="2s"/>
-                    Cambiando de tema, el otro día intenté hacer una dieta vegana, pero no pude... ¡es que no encontraba el enchufe para la zanahoria!
-                    <break time="2s"/>
-                    <audio src="https://bigsoundbank.com/UPLOAD/mp3/0475.mp3"></audio>
-                    <break time="2s"/>
-                    ¡Y hablando de vegetales! ¿Qué dijo el tomate a la salsa? ¡No me tritures!
-                    <break time="2s"/>
-                    <audio src="https://bigsoundbank.com/UPLOAD/mp3/2097.mp3"></audio>
-                    <break time="2s"/>
-                    ¿Saben por qué las focas siempre miran siempre hacia arriba? ¡Porque ahí están los focos!
-                    <break time="2s"/>
-                    <audio src="https://bigsoundbank.com/UPLOAD/mp3/0475.mp3"></audio>
-                    <break time="2s"/>
-                    Y aquí va uno de matemáticas: ¿Qué le dice un número par a un número impar? ¡Impar-tidista!
-                    <break time="2s"/>
-                    <audio src="https://bigsoundbank.com/UPLOAD/mp3/2097.mp3"></audio>
-                    <break time="2s"/>
-                    Y antes de irme, ¿saben cuál es el colmo de Aladino? Tener mal genio.
-                    <break time="2s"/>
-                    <audio src="https://bigsoundbank.com/UPLOAD/mp3/0475.mp3"></audio>
-                    <break time="2s"/>
-                    Espero que hayan disfrutado estos chistes tanto como yo. ¡Hasta la próxima!
-                </prosody>
-            </speak>
-        `;
+    <!-- Audio player with controls for playing audio -->
+    <audio id="audioPlayer" controls></audio>
 
-        var response = await fetch('https://europe-west1-deductive-wares-233220.cloudfunctions.net/SSML-to-audio', {
-            method: 'POST',
-            mode: 'no-cors',
-             // Si no ponemos el no-cors, no nos va a dejar hacer el cross site
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
+    <script>
+        // The "ssml" constant contains SSML script of the jokes
+
+        const ssml = `<speak>
+    <prosody rate='slow'>
+        ¡Buenas noches a todos! Estoy emocionado de estar aquí esta noche.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/0475.mp3'></audio>
+        Saben, siempre me ha fascinado el tema de los agujeros negros... Pero no entiendo por qué se llevan toda la atención, ¡si los agujeros blancos también importan!
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/2097.mp3'></audio>
+        ¿Por qué los agujeros negros son malos para las fiestas? Porque siempre se tragan todo el aperitivo antes de que llegue la cena.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/0475.mp3'></audio>
+        Y hablando de espacio, ¿saben cuál es el café más caro del universo? El ex-preso, ¡pero ten cuidado! Si lo tomas en un agujero negro, podrías quedarte despierto para siempre.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/2097.mp3'></audio>
+        Cambiando de tema, el otro día intenté hacer una dieta vegana, pero no pude... ¡es que no encontraba el enchufe para la zanahoria! Y cuando finalmente lo encontré, la zanahoria estaba navegando por internet.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/0475.mp3'></audio>
+        ¿Cuál es el vegetal más divertido? ¡El chiste-lote! Porque siempre está en el centro de la risa.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/2097.mp3'></audio>
+        ¡Y hablando de vegetales! ¿Qué dijo el tomate a la salsa? ¡No me tritures! Pero en realidad, el tomate estaba buscando un abogado para presentar una demanda.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/0475.mp3'></audio>
+        ¿Saben por qué las focas siempre miran hacia arriba? ¡Porque ahí están los focos! Además, están esperando a que alguien les lance un pescado volador.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/2097.mp3'></audio>
+        Y aquí va uno de matemáticas: ¿Qué le dice un número par a un número impar? ¡Impar-tidista! Pero al final, todos los números son bienvenidos en la gran fiesta de las matemáticas.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/0475.mp3'></audio>
+        ¿Cuál es el colmo de un electricista? ¡No encontrar su corriente de trabajo!
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/2097.mp3'></audio>
+        ¿Qué hace una abeja en el gimnasio? ¡Zum-ba!
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/0475.mp3'></audio>
+        ¿Por qué los pájaros no usan Facebook? Porque ya tienen Twitter.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/2097.mp3'></audio>
+        ¿Cuál es el colmo de un jardinero? Tener malas plantas.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/0475.mp3'></audio>
+        ¿Qué hace una abeja cuando se siente perdida? ¡Zum-bula!
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/2097.mp3'></audio>
+        ¿Cuál es el animal más antiguo? La cebra, porque está en blanco y negro.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/0475.mp3'></audio>
+        ¿Qué le dijo el semáforo al coche? No me mires, me estoy cambiando.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/2097.mp3'></audio>
+        ¿Cuál es el colmo de un fontanero? Tener una fuga de ideas.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/0475.mp3'></audio>
+        ¿Por qué los esqueletos no pelean entre ellos? Porque no tienen agallas.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/2097.mp3'></audio>
+        ¿Qué hace una abeja en el gimnasio? ¡Zum-ba!
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/0475.mp3'></audio>
+        ¿Qué le dijo una iguana a su hermana gemela? Somos iguanitas.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/2097.mp3'></audio>
+        Y antes de irme, ¿saben cuál es el colmo de Aladino? Tener mal genio, pero al menos puede desear que su mal genio desaparezca con solo frotar la lámpara mágica.
+        <break time='2s'/>
+        <audio src='https://bigsoundbank.com/UPLOAD/mp3/0475.mp3'></audio>
+        Espero que hayan disfrutado de estos chistes tanto como yo. ¡Hasta la próxima y que sus noches estén llenas de risas y buen humor!
+    </prosody>
+</speak>
+`;
+
+        // The "postData()" function is defined below to handle API interaction.
+        const postData = async () => {
+            // API endpoint URL
+            const url = 'https://europe-west1-deductive-wares-233220.cloudfunctions.net/SSML-to-audio';
+
+            // Data to be sent in the request
+            const data = {
                 gID: '4dEf',
-                ssml: ssml,
-            }),
-        });
+                ssml: ssml // Contains the SSML data defined above
+            };
 
-        var arrayBuffer = await response.arrayBuffer();
-        var audioBlob = new Blob([arrayBuffer], { type: 'audio/mp3' });
-        var audioUrl = URL.createObjectURL(audioBlob);
-        var audio = new Audio(audioUrl);
-        audio.play();
-    }
-</script>
+            try {
+                // Send a POST request to the API
+                const response = await fetch(url, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                // Check the response content type
+                const contentType = response.headers.get("content-type");
+
+                // If the response is in JSON format, display it in the response container
+                if (contentType && contentType.includes("application/json")) {
+                    const responseData = await response.json();
+                    document.getElementById('responseContainer').innerText = "Respuesta de la API (JSON):\n\n" + JSON.stringify(responseData, null, 2);
+                } else {
+                    // If the response contains audio data, play it in the audio player
+                    const blob = await response.blob();
+                    const objectURL = URL.createObjectURL(blob);
+                    const audioPlayer = document.getElementById('audioPlayer');
+                    audioPlayer.src = objectURL;
+                    audioPlayer.play();
+                    document.getElementById('responseContainer').innerText = 'Reproduciendo monólogo...';
+                }
+            } catch (error) {
+                // Handle errors, if any
+                console.error('Error al enviar la solicitud:', error);
+            }
+        }
+    </script>
 
 </body>
 </html>
