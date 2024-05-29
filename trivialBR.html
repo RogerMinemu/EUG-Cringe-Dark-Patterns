@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivial Battle Royale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('https://images8.alphacoders.com/458/458519.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            width: 500px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .difficulty-selection, .question-display {
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            background-color: #f0ad4e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            flex: 1 1 45%;
+            box-sizing: border-box;
+            max-width: 100px;
+        }
+
+        .option-btn:hover {
+            background-color: #ec971f;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 90%;
+                padding: 10px;
+            }
+
+            .option-btn {
+                padding: 10px;
+                flex: 1 1 100%;
+                max-width: none;
+            }
+
+            button {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Trivial Battle Royale</h1>
+        <div class="difficulty-selection">
+            <label for="difficulty">Selecciona la dificultad:</label>
+            <select id="difficulty">
+                <option value="easy">Fácil</option>
+                <option value="medium">Media</option>
+                <option value="hard">Difícil</option>
+                <option value="very-hard">Muy Difícil</option>
+            </select>
+            <button id="new-game">Comenzar Juego</button>
+        </div>
+        <div class="question-display">
+            <p id="question"></p>
+            <div id="options" class="options">
+                <button class="option-btn" id="option1"></button>
+                <button class="option-btn" id="option2"></button>
+                <button class="option-btn" id="option3"></button>
+            </div>
+            <p id="feedback" style="display: none;"></p>
+            <div class="controls">
+                <button id="next-question">Siguiente Pregunta</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        const questions = {
+            easy: [
+                { question: "¿Cuál es la capital de Argentina?", options: ["Buenos Aires", "Santiago", "Montevideo"], answer: "Buenos Aires" },
+                { question: "¿Qué océano se encuentra al oeste de África?", options: ["Atlántico", "Pacífico", "Índico"], answer: "Atlántico" },
+                { question: "¿Cuál es el planeta más cercano al sol?", options: ["Mercurio", "Venus", "Tierra"], answer: "Mercurio" },
+                { question: "¿En qué año cayó el Muro de Berlín?", options: ["1989", "1991", "1993"], answer: "1989" },
+                { question: "¿Quién pintó la Capilla Sixtina?", options: ["Miguel Ángel", "Leonardo da Vinci", "Rafael"], answer: "Miguel Ángel" },
+                { question: "¿Qué gas es esencial para la respiración humana?", options: ["Oxígeno", "Nitrógeno", "Dióxido de Carbono"], answer: "Oxígeno" },
+                { question: "¿Cuál es la moneda de Japón?", options: ["Yen", "Won", "Peso"], answer: "Yen" },
+                { question: "¿Qué instrumento mide la presión atmosférica?", options: ["Barómetro", "Termómetro", "Higrómetro"], answer: "Barómetro" },
+                { question: "¿En qué país se encuentra el río Nilo?", options: ["Egipto", "Sudán", "Etiopía"], answer: "Egipto" },
+                { question: "¿Quién escribió 'Cien años de soledad'?", options: ["Gabriel García Márquez", "Mario Vargas Llosa", "Julio Cortázar"], answer: "Gabriel García Márquez" },
+                { question: "¿Cuál es el metal más ligero?", options: ["Litio", "Aluminio", "Helio"], answer: "Litio" },
+                { question: "¿Quién fue el primer hombre en caminar sobre la luna?", options: ["Neil Armstrong", "Buzz Aldrin", "Yuri Gagarin"], answer: "Neil Armstrong" },
+                { question: "¿Qué país tiene la mayor población del mundo?", options: ["China", "India", "Estados Unidos"], answer: "China" },
+                { question: "¿Qué vitamina es producida por el cuerpo humano cuando se expone al sol?", options: ["Vitamina D", "Vitamina C", "Vitamina B12"], answer: "Vitamina D" },
+                { question: "¿Quién compuso la Novena Sinfonía?", options: ["Beethoven", "Mozart", "Bach"], answer: "Beethoven" },
+                { question: "¿En qué continente se encuentra el desierto del Sahara?", options: ["África", "Asia", "América del Sur"], answer: "África" },
+                { question: "¿Qué órgano del cuerpo humano bombea la sangre?", options: ["Corazón", "Pulmón", "Hígado"], answer: "Corazón" },
+                { question: "¿Cuál es el idioma oficial de Brasil?", options: ["Portugués", "Español", "Inglés"], answer: "Portugués" },
+                { question: "¿Cuál es la montaña más alta del mundo?", options: ["Everest", "K2", "Kangchenjunga"], answer: "Everest" },
+                { question: "¿Qué elemento químico tiene el símbolo 'O'?", options: ["Oxígeno", "Oro", "Osmio"], answer: "Oxígeno" },
+                { question: "¿En qué país se encuentra la Torre Eiffel?", options: ["Francia", "Italia", "España"], answer: "Francia" },
+                { question: "¿Cuál es la capital de Australia?", options: ["Canberra", "Sídney", "Melbourne"], answer: "Canberra" },
+                { question: "¿Quién escribió 'Don Quijote de la Mancha'?", options: ["Miguel de Cervantes", "William Shakespeare", "Federico García Lorca"], answer: "Miguel de Cervantes" },
+                { question: "¿Qué deporte se practica en Wimbledon?", options: ["Tenis", "Cricket", "Golf"], answer: "Tenis" },
+                { question: "¿Cuál es el animal terrestre más rápido?", options: ["Guepardo", "León", "Antílope"], answer: "Guepardo" },
+                { question: "¿Qué elemento químico tiene el símbolo 'Fe'?", options: ["Hierro", "Fluor", "Fósforo"], answer: "Hierro" },
+                { question: "¿En qué país se encuentra el Taj Mahal?", options: ["India", "Pakistán", "Irán"], answer: "India" },
+                { question: "¿Cuál es el órgano más grande del cuerpo humano?", options: ["Piel", "Hígado", "Cerebro"], answer: "Piel" },
+                { question: "¿En qué año comenzó la Segunda Guerra Mundial?", options: ["1939", "1941", "1945"], answer: "1939" },
+                { question: "¿Cuál es el río más largo del mundo?", options: ["Amazonas", "Nilo", "Yangtsé"], answer: "Amazonas" },
+                { question: "¿Qué planeta es conocido como el Planeta Rojo?", options: ["Marte", "Júpiter", "Venus"], answer: "Marte" },
+                { question: "¿Quién pintó 'La última cena'?", options: ["Leonardo da Vinci", "Miguel Ángel", "Rafael"], answer: "Leonardo da Vinci" },
+                { question: "¿Cuál es el país más grande del mundo por área?", options: ["Rusia", "Canadá", "China"], answer: "Rusia" },
+                { question: "¿Qué gas se utiliza en los globos para hacerlos flotar?", options: ["Helio", "Hidrógeno", "Oxígeno"], answer: "Helio" },
+                { question: "¿Qué tipo de animal es una ballena?", options: ["Mamífero", "Pez", "Reptil"], answer: "Mamífero" },
+                { question: "¿En qué ciudad se encuentra el Coliseo?", options: ["Roma", "Atenas", "París"], answer: "Roma" },
+                { question: "¿Quién descubrió la penicilina?", options: ["Alexander Fleming", "Marie Curie", "Louis Pasteur"], answer: "Alexander Fleming" },
+                { question: "¿Cuál es el metal más abundante en la corteza terrestre?", options: ["Aluminio", "Hierro", "Cobre"], answer: "Aluminio" },
+                { question: "¿En qué país se encuentra la Estatua de la Libertad?", options: ["Estados Unidos", "Francia", "Canadá"], answer: "Estados Unidos" },
+                { question: "¿Qué vitamina es producida por el cuerpo humano cuando se expone al sol?", options: ["Vitamina D", "Vitamina C", "Vitamina B12"], answer: "Vitamina D" },
+                { question: "¿Cuál es el país más pequeño del mundo?", options: ["Ciudad del Vaticano", "Mónaco", "San Marino"], answer: "Ciudad del Vaticano" },
+                { question: "¿Qué instrumento se utiliza para medir la temperatura?", options: ["Termómetro", "Barómetro", "Anemómetro"], answer: "Termómetro" },
+                { question: "¿En qué país se encuentra el Monte Everest?", options: ["Nepal", "China", "India"], answer: "Nepal" },
+                { question: "¿Quién pintó la 'Noche Estrellada'?", options: ["Vincent van Gogh", "Pablo Picasso", "Claude Monet"], answer: "Vincent van Gogh" },
+                { question: "¿Qué país tiene forma de bota?", options: ["Italia", "Grecia", "España"], answer: "Italia" },
+                { question: "¿Qué es el Teide?", options: ["Un volcán", "Una montaña", "Un río"], answer: "Un volcán" },
+                { question: "¿Cuál es el sistema operativo más utilizado en el mundo?", options: ["Windows", "MacOS", "Linux"], answer: "Windows" },
+                { question: "¿Quién escribió 'La Odisea'?", options: ["Homero", "Virgilio", "Platón"], answer: "Homero" }
+            ],
+            medium: [
+                { question: "¿Cuál es el idioma más hablado en el mundo?", options: ["Mandarín", "Español", "Inglés"], answer: "Mandarín" },
+                { question: "¿Qué científico desarrolló la teoría de la relatividad?", options: ["Albert Einstein", "Isaac Newton", "Galileo Galilei"], answer: "Albert Einstein" },
+                { question: "¿Cuál es la velocidad de la luz?", options: ["300,000 km/s", "150,000 km/s", "450,000 km/s"], answer: "300,000 km/s" },
+                { question: "¿Quién fue el primer presidente de Estados Unidos?", options: ["George Washington", "Abraham Lincoln", "Thomas Jefferson"], answer: "George Washington" },
+                { question: "¿Qué país tiene el sistema ferroviario más largo del mundo?", options: ["Rusia", "China", "Estados Unidos"], answer: "Rusia" },
+                { question: "¿Qué elemento químico tiene el símbolo 'Na'?", options: ["Sodio", "Nitrógeno", "Neón"], answer: "Sodio" },
+                { question: "¿Cuál es el planeta más grande de nuestro sistema solar?", options: ["Júpiter", "Saturno", "Neptuno"], answer: "Júpiter" },
+                { question: "¿Quién escribió 'Hamlet'?", options: ["William Shakespeare", "Charles Dickens", "Mark Twain"], answer: "William Shakespeare" },
+                { question: "¿En qué país se encuentra Machu Picchu?", options: ["Perú", "Chile", "Argentina"], answer: "Perú" },
+                { question: "¿Cuál es el río más largo de Europa?", options: ["Volga", "Danubio", "Rin"], answer: "Volga" },
+                { question: "¿Qué país tiene más islas en el mundo?", options: ["Suecia", "Indonesia", "Filipinas"], answer: "Suecia" },
+                { question: "¿Qué ciudad es conocida como la Gran Manzana?", options: ["Nueva York", "Los Ángeles", "Chicago"], answer: "Nueva York" },
+                { question: "¿Cuál es la capital de Canadá?", options: ["Ottawa", "Toronto", "Vancouver"], answer: "Ottawa" },
+                { question: "¿Qué país es conocido por su forma de bota?", options: ["Italia", "Grecia", "España"], answer: "Italia" },
+                { question: "¿Cuál es el nombre científico del agua?", options: ["H₂O", "O₂", "CO₂"], answer: "H₂O" },
+                { question: "¿Quién inventó el teléfono?", options: ["Alexander Graham Bell", "Thomas Edison", "Nikola Tesla"], answer: "Alexander Graham Bell" },
+                { question: "¿Cuál es la montaña más alta de África?", options: ["Kilimanjaro", "Monte Kenia", "Ruwenzori"], answer: "Kilimanjaro" },
+                { question: "¿Qué artista es conocido por pintar la Mona Lisa?", options: ["Leonardo da Vinci", "Pablo Picasso", "Vincent van Gogh"], answer: "Leonardo da Vinci" },
+                { question: "¿Qué país es conocido como la tierra del sol naciente?", options: ["Japón", "China", "Corea del Sur"], answer: "Japón" },
+                { question: "¿Qué vitamina se produce en la piel cuando se expone a la luz solar?", options: ["Vitamina D", "Vitamina C", "Vitamina B12"], answer: "Vitamina D" },
+                { question: "¿Qué gas es el más abundante en la atmósfera terrestre?", options: ["Nitrógeno", "Oxígeno", "Dióxido de Carbono"], answer: "Nitrógeno" },
+                { question: "¿Qué país tiene la mayor cantidad de medallas olímpicas?", options: ["Estados Unidos", "China", "Rusia"], answer: "Estados Unidos" },
+                { question: "¿Qué océano es el más grande del mundo?", options: ["Pacífico", "Atlántico", "Índico"], answer: "Pacífico" },
+                { question: "¿Qué estructura construyeron los romanos para transportar agua?", options: ["Acueducto", "Puente", "Coliseo"], answer: "Acueducto" },
+                { question: "¿Qué sistema político defiende la propiedad común de los medios de producción?", options: ["Comunismo", "Capitalismo", "Socialismo"], answer: "Comunismo" },
+                { question: "¿Cuál es la moneda oficial de Suiza?", options: ["Franco Suizo", "Euro", "Dólar"], answer: "Franco Suizo" },
+                { question: "¿En qué año se hundió el Titanic?", options: ["1912", "1914", "1916"], answer: "1912" },
+                { question: "¿Cuál es la capital de Australia?", options: ["Canberra", "Sídney", "Melbourne"], answer: "Canberra" },
+                { question: "¿Qué país es conocido por el tulipán?", options: ["Países Bajos", "Dinamarca", "Alemania"], answer: "Países Bajos" },
+                { question: "¿Cuál es el río más largo de América del Sur?", options: ["Amazonas", "Nilo", "Misisipi"], answer: "Amazonas" },
+                { question: "¿Qué país es famoso por la Torre Eiffel?", options: ["Francia", "Italia", "España"], answer: "Francia" },
+                { question: "¿Qué órgano humano es el más grande?", options: ["Piel", "Hígado", "Pulmones"], answer: "Piel" },
+                { question: "¿Quién pintó 'La noche estrellada'?", options: ["Vincent van Gogh", "Pablo Picasso", "Claude Monet"], answer: "Vincent van Gogh" },
+                { question: "¿Cuál es el país más pequeño del mundo?", options: ["Ciudad del Vaticano", "Mónaco", "San Marino"], answer: "Ciudad del Vaticano" },
+                { question: "¿Qué país es conocido como la tierra del fuego y hielo?", options: ["Islandia", "Groenlandia", "Noruega"], answer: "Islandia" },
+                { question: "¿Quién es el autor de 'La Divina Comedia'?", options: ["Dante Alighieri", "Giovanni Boccaccio", "Francesco Petrarca"], answer: "Dante Alighieri" },
+                { question: "¿Cuál es la moneda oficial de Japón?", options: ["Yen", "Won", "Peso"], answer: "Yen" },
+                { question: "¿Qué animal es conocido como el 'Rey de la Selva'?", options: ["León", "Tigre", "Elefante"], answer: "León" },
+                { question: "¿Cuál es el río más largo de Asia?", options: ["Yangtsé", "Ganges", "Amur"], answer: "Yangtsé" },
+                { question: "¿Qué país es conocido por su sistema de castas?", options: ["India", "China", "Japón"], answer: "India" },
+                { question: "¿Cuál es la capital de Egipto?", options: ["El Cairo", "Alejandría", "Luxor"], answer: "El Cairo" },
+                { question: "¿Qué escritor creó el personaje de Sherlock Holmes?", options: ["Arthur Conan Doyle", "Agatha Christie", "Edgar Allan Poe"], answer: "Arthur Conan Doyle" },
+                { question: "¿Qué científico formuló la ley de la gravedad?", options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei"], answer: "Isaac Newton" },
+                { question: "¿Qué país es conocido por sus canguros?", options: ["Australia", "Nueva Zelanda", "Papúa Nueva Guinea"], answer: "Australia" },
+                { question: "¿Cuál es la moneda oficial del Reino Unido?", options: ["Libra esterlina", "Euro", "Dólar"], answer: "Libra esterlina" },
+                { question: "¿Qué océano se encuentra al este de África?", options: ["Índico", "Atlántico", "Pacífico"], answer: "Índico" },
+                { question: "¿Qué planeta es conocido como el Planeta Rojo?", options: ["Marte", "Júpiter", "Saturno"], answer: "Marte" }
+            ],
+            hard: [
+                { question: "¿Cuál es el elemento más abundante en el universo?", options: ["Hidrógeno", "Oxígeno", "Helio"], answer: "Hidrógeno" },
+                { question: "¿Cuál es el libro más vendido en el mundo?", options: ["La Biblia", "El Corán", "Don Quijote"], answer: "La Biblia" },
+                { question: "¿Quién fue el primer emperador romano?", options: ["Augusto", "Julio César", "Nerón"], answer: "Augusto" },
+                { question: "¿Cuál es el país más poblado de África?", options: ["Nigeria", "Etiopía", "Egipto"], answer: "Nigeria" },
+                { question: "¿Quién escribió 'La Odisea'?", options: ["Homero", "Virgilio", "Platón"], answer: "Homero" },
+                { question: "¿Qué científico descubrió la penicilina?", options: ["Alexander Fleming", "Marie Curie", "Louis Pasteur"], answer: "Alexander Fleming" },
+                { question: "¿Cuál es la distancia entre la Tierra y el Sol?", options: ["150 millones de km", "100 millones de km", "200 millones de km"], answer: "150 millones de km" },
+                { question: "¿Qué país es el mayor productor de petróleo del mundo?", options: ["Estados Unidos", "Arabia Saudita", "Rusia"], answer: "Estados Unidos" },
+                { question: "¿Cuál es el órgano más grande del cuerpo humano?", options: ["Piel", "Hígado", "Pulmones"], answer: "Piel" },
+                { question: "¿Qué país es conocido como el gigante asiático?", options: ["China", "India", "Japón"], answer: "China" },
+                { question: "¿Qué científico formuló la teoría de la evolución?", options: ["Charles Darwin", "Gregor Mendel", "Jean-Baptiste Lamarck"], answer: "Charles Darwin" },
+                { question: "¿Cuál es el desierto más grande del mundo?", options: ["Sahara", "Gobi", "Kalahari"], answer: "Sahara" },
+                { question: "¿Qué estructura se encuentra en la frontera entre Estados Unidos y México?", options: ["El Muro", "El Río Bravo", "La Barrera"], answer: "El Muro" },
+                { question: "¿Cuál es el país más pequeño del mundo?", options: ["Ciudad del Vaticano", "Mónaco", "San Marino"], answer: "Ciudad del Vaticano" },
+                { question: "¿Qué instrumento se utiliza para medir la presión atmosférica?", options: ["Barómetro", "Termómetro", "Higrómetro"], answer: "Barómetro" },
+                { question: "¿En qué país se encuentra el río Amazonas?", options: ["Brasil", "Perú", "Colombia"], answer: "Brasil" },
+                { question: "¿Qué autor escribió '1984'?", options: ["George Orwell", "Aldous Huxley", "Ray Bradbury"], answer: "George Orwell" },
+                { question: "¿Cuál es la capital de Noruega?", options: ["Oslo", "Estocolmo", "Copenhague"], answer: "Oslo" },
+                { question: "¿Qué país tiene el mayor número de Patrimonios de la Humanidad?", options: ["Italia", "China", "España"], answer: "Italia" },
+                { question: "¿Qué río pasa por París?", options: ["Sena", "Danubio", "Rin"], answer: "Sena" },
+                { question: "¿Cuál es el océano más profundo del mundo?", options: ["Pacífico", "Atlántico", "Índico"], answer: "Pacífico" },
+                { question: "¿Quién es el autor de 'El Principito'?", options: ["Antoine de Saint-Exupéry", "Jules Verne", "Victor Hugo"], answer: "Antoine de Saint-Exupéry" },
+                { question: "¿Cuál es el metal más caro del mundo?", options: ["Rodio", "Oro", "Platino"], answer: "Rodio" },
+                { question: "¿Qué país es conocido por sus canguros?", options: ["Australia", "Nueva Zelanda", "Papúa Nueva Guinea"], answer: "Australia" },
+                { question: "¿Cuál es la moneda oficial de Japón?", options: ["Yen", "Won", "Peso"], answer: "Yen" },
+                { question: "¿Cuál es el río más largo de América del Norte?", options: ["Misisipi", "Missouri", "Yukón"], answer: "Misisipi" },
+                { question: "¿Qué país es conocido por sus castillos medievales?", options: ["Escocia", "Francia", "Alemania"], answer: "Escocia" },
+                { question: "¿Qué país tiene la mayor cantidad de islas?", options: ["Suecia", "Noruega", "Filipinas"], answer: "Suecia" },
+                { question: "¿Qué país es el mayor productor de café del mundo?", options: ["Brasil", "Colombia", "Vietnam"], answer: "Brasil" },
+                { question: "¿Cuál es el órgano más grande del cuerpo humano?", options: ["Piel", "Hígado", "Pulmones"], answer: "Piel" },
+                { question: "¿Qué científico desarrolló la teoría de la relatividad?", options: ["Albert Einstein", "Isaac Newton", "Galileo Galilei"], answer: "Albert Einstein" },
+                { question: "¿Cuál es la montaña más alta de América del Sur?", options: ["Aconcagua", "Ojos del Salado", "Monte Pissis"], answer: "Aconcagua" },
+                { question: "¿Qué país es conocido por su canal que conecta el Atlántico y el Pacífico?", options: ["Panamá", "Nicaragua", "Costa Rica"], answer: "Panamá" },
+                { question: "¿Qué científico formuló la ley de la gravedad?", options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei"], answer: "Isaac Newton" },
+                { question: "¿Cuál es la capital de Suecia?", options: ["Estocolmo", "Oslo", "Helsinki"], answer: "Estocolmo" },
+                { question: "¿Qué país tiene el mayor número de lenguas oficiales?", options: ["India", "Sudáfrica", "Suiza"], answer: "India" },
+                { question: "¿Cuál es el país más grande de América del Sur?", options: ["Brasil", "Argentina", "Perú"], answer: "Brasil" },
+                { question: "¿Qué río pasa por Roma?", options: ["Tíber", "Arno", "Po"], answer: "Tíber" },
+                { question: "¿Cuál es el país más poblado del mundo?", options: ["China", "India", "Estados Unidos"], answer: "China" },
+                { question: "¿Qué país es conocido por sus tulipanes?", options: ["Países Bajos", "Dinamarca", "Alemania"], answer: "Países Bajos" },
+                { question: "¿Qué órgano humano es responsable de la producción de insulina?", options: ["Páncreas", "Hígado", "Riñón"], answer: "Páncreas" },
+                { question: "¿Qué país es conocido por su Torre Inclinada?", options: ["Italia", "Francia", "España"], answer: "Italia" },
+                { question: "¿Cuál es el río más largo de África?", options: ["Nilo", "Congo", "Níger"], answer: "Nilo" },
+                { question: "¿Quién escribió 'Don Quijote de la Mancha'?", options: ["Miguel de Cervantes", "William Shakespeare", "Lope de Vega"], answer: "Miguel de Cervantes" },
+                { question: "¿Qué país es conocido por sus pirámides?", options: ["Egipto", "México", "Perú"], answer: "Egipto" },
+                { question: "¿Cuál es el animal más grande del mundo?", options: ["Ballena azul", "Elefante", "Tiburón blanco"], answer: "Ballena azul" }
+            ],
+            'very-hard': [
+                { question: "¿Cuál es la derivada de cos(x)?", options: ["-sin(x)", "cos(x)", "sin(x)"], answer: "-sin(x)" },
+                { question: "¿Qué científico desarrolló la teoría de la relatividad general?", options: ["Albert Einstein", "Isaac Newton", "Galileo Galilei"], answer: "Albert Einstein" },
+                { question: "¿Cuál es la capital de Mongolia?", options: ["Ulán Bator", "Astaná", "Biskek"], answer: "Ulán Bator" },
+                { question: "¿Cuál es el número atómico del uranio?", options: ["92", "94", "96"], answer: "92" },
+                { question: "¿Cuál es el elemento más abundante en la corteza terrestre?", options: ["Oxígeno", "Silicio", "Aluminio"], answer: "Oxígeno" },
+                { question: "¿Cuál es la capital de Kazajistán?", options: ["Nursultán", "Almaty", "Taskent"], answer: "Nursultán" },
+                { question: "¿Quién escribió 'La Metamorfosis'?", options: ["Franz Kafka", "Fiódor Dostoyevski", "Marcel Proust"], answer: "Franz Kafka" },
+                { question: "¿Cuál es el planeta más denso del sistema solar?", options: ["Tierra", "Saturno", "Neptuno"], answer: "Tierra" },
+                { question: "¿Cuál es el país más grande de África?", options: ["Argelia", "Sudán", "República Democrática del Congo"], answer: "Argelia" },
+                { question: "¿Cuál es el país más poblado de América del Sur?", options: ["Brasil", "Argentina", "Colombia"], answer: "Brasil" },
+                { question: "¿Qué país tiene la mayor cantidad de lagos?", options: ["Canadá", "Suecia", "Rusia"], answer: "Canadá" },
+                { question: "¿Cuál es el país más pequeño de Asia?", options: ["Maldivas", "Singapur", "Bahréin"], answer: "Maldivas" },
+                { question: "¿Quién escribió 'En busca del tiempo perdido'?", options: ["Marcel Proust", "James Joyce", "Virginia Woolf"], answer: "Marcel Proust" },
+                { question: "¿Qué científico formuló las leyes del movimiento?", options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei"], answer: "Isaac Newton" },
+                { question: "¿Cuál es el país más grande de Oceanía?", options: ["Australia", "Papúa Nueva Guinea", "Nueva Zelanda"], answer: "Australia" },
+                { question: "¿Qué científico descubrió la estructura del ADN?", options: ["James Watson y Francis Crick", "Rosalind Franklin", "Gregor Mendel"], answer: "James Watson y Francis Crick" },
+                { question: "¿Cuál es el país con más volcanes activos?", options: ["Indonesia", "Japón", "Chile"], answer: "Indonesia" },
+                { question: "¿Qué matemático es conocido por su teorema sobre los triángulos rectángulos?", options: ["Pitágoras", "Euclides", "Arquímedes"], answer: "Pitágoras" },
+                { question: "¿Cuál es el océano más pequeño del mundo?", options: ["Ártico", "Atlántico", "Índico"], answer: "Ártico" },
+                { question: "¿Qué químico es conocido como el padre de la tabla periódica?", options: ["Dmitri Mendeléyev", "Antoine Lavoisier", "John Dalton"], answer: "Dmitri Mendeléyev" },
+                { question: "¿Qué país es conocido por tener el mayor número de pirámides?", options: ["Sudán", "Egipto", "México"], answer: "Sudán" },
+                { question: "¿Cuál es el río más caudaloso del mundo?", options: ["Amazonas", "Congo", "Nilo"], answer: "Amazonas" },
+                { question: "¿Cuál es la fórmula química del ozono?", options: ["O3", "O2", "CO2"], answer: "O3" },
+                { question: "¿Qué autor escribió 'Crimen y castigo'?", options: ["Fiódor Dostoyevski", "Lev Tolstói", "Iván Turguénev"], answer: "Fiódor Dostoyevski" },
+                { question: "¿Cuál es el número atómico del hidrógeno?", options: ["1", "2", "3"], answer: "1" },
+                { question: "¿Qué científico desarrolló la teoría de la selección natural?", options: ["Charles Darwin", "Gregor Mendel", "Jean-Baptiste Lamarck"], answer: "Charles Darwin" },
+                { question: "¿Cuál es el planeta más frío del sistema solar?", options: ["Urano", "Neptuno", "Saturno"], answer: "Urano" },
+                { question: "¿Cuál es el país más pequeño de Europa?", options: ["Ciudad del Vaticano", "Mónaco", "San Marino"], answer: "Ciudad del Vaticano" },
+                { question: "¿Qué autor escribió 'La montaña mágica'?", options: ["Thomas Mann", "Hermann Hesse", "Franz Kafka"], answer: "Thomas Mann" },
+                { question: "¿Cuál es el metal más abundante en la corteza terrestre?", options: ["Aluminio", "Hierro", "Cobre"], answer: "Aluminio" },
+                { question: "¿Qué químico formuló la ley de los gases?", options: ["Robert Boyle", "Jacques Charles", "John Dalton"], answer: "Robert Boyle" },
+                { question: "¿Cuál es el país con la mayor biodiversidad?", options: ["Brasil", "Indonesia", "México"], answer: "Brasil" },
+                { question: "¿Qué órgano humano es responsable de la producción de insulina?", options: ["Páncreas", "Hígado", "Riñón"], answer: "Páncreas" },
+                { question: "¿Qué autor escribió 'En el camino'?", options: ["Jack Kerouac", "Allen Ginsberg", "William S. Burroughs"], answer: "Jack Kerouac" },
+                { question: "¿Cuál es el elemento más ligero?", options: ["Hidrógeno", "Helio", "Litio"], answer: "Hidrógeno" },
+                { question: "¿Qué matemático es conocido por sus contribuciones a la teoría de números?", options: ["Carl Friedrich Gauss", "Leonhard Euler", "Pierre-Simon Laplace"], answer: "Carl Friedrich Gauss" },
+                { question: "¿Cuál es el desierto más frío del mundo?", options: ["Antártida", "Gobi", "Sahara"], answer: "Antártida" },
+                { question: "¿Qué país es conocido por la Ópera de Sídney?", options: ["Australia", "Nueva Zelanda", "Canadá"], answer: "Australia" },
+                { question: "¿Cuál es el planeta más caliente del sistema solar?", options: ["Venus", "Mercurio", "Marte"], answer: "Venus" },
+                { question: "¿Qué país tiene el mayor número de Patrimonios de la Humanidad?", options: ["Italia", "China", "España"], answer: "Italia" },
+                { question: "¿Qué órgano humano es responsable de la producción de bilis?", options: ["Hígado", "Páncreas", "Riñón"], answer: "Hígado" },
+                { question: "¿Qué autor escribió 'El amor en los tiempos del cólera'?", options: ["Gabriel García Márquez", "Mario Vargas Llosa", "Julio Cortázar"], answer: "Gabriel García Márquez" },
+                { question: "¿Cuál es el metal más resistente?", options: ["Tungsteno", "Titanio", "Acero"], answer: "Tungsteno" },
+                { question: "¿Qué científico formuló la ley de la gravitación universal?", options: ["Isaac Newton", "Albert Einstein", "Galileo Galilei"], answer: "Isaac Newton" },
+                { question: "¿Cuál es el país más grande de Asia?", options: ["China", "India", "Rusia"], answer: "China" },
+                { question: "¿Cuál es el elemento más denso?", options: ["Osmio", "Plomo", "Iridio"], answer: "Osmio" }
+            ]
+        };
+
+        let usedQuestions = { easy: [], medium: [], hard: [], 'very-hard': [] };
+        let currentQuestion = null;
+        let currentDifficulty = 'easy';
+
+        function getRandomQuestion(difficulty) {
+            if (usedQuestions[difficulty].length === questions[difficulty].length) {
+                usedQuestions[difficulty] = [];
+            }
+
+            let questionPool = questions[difficulty].filter(q => !usedQuestions[difficulty].includes(q));
+            let randomIndex = Math.floor(Math.random() * questionPool.length);
+            let randomQuestion = questionPool[randomIndex];
+
+            usedQuestions[difficulty].push(randomQuestion);
+            return randomQuestion;
+        }
+
+        function displayQuestion() {
+            if (!currentDifficulty) return;
+
+            currentQuestion = getRandomQuestion(currentDifficulty);
+            document.getElementById('question').textContent = currentQuestion.question;
+            document.getElementById('option1').textContent = currentQuestion.options[0];
+            document.getElementById('option2').textContent = currentQuestion.options[1];
+            document.getElementById('option3').textContent = currentQuestion.options[2];
+            document.getElementById('feedback').style.display = 'none';
+
+            document.querySelectorAll('.option-btn').forEach(button => {
+                button.onclick = () => {
+                    if (button.textContent === currentQuestion.answer) {
+                        document.getElementById('feedback').textContent = "¡Correcto!";
+                    } else {
+                        document.getElementById('feedback').textContent = "Incorrecto. La respuesta correcta es " + currentQuestion.answer;
+                    }
+                    document.getElementById('feedback').style.display = 'block';
+                };
+            });
+        }
+
+        document.getElementById('new-game').addEventListener('click', () => {
+            usedQuestions = { easy: [], medium: [], hard: [], 'very-hard': [] };
+            currentQuestion = null;
+            currentDifficulty = document.getElementById('difficulty').value;
+            displayQuestion();
+        });
+
+        document.getElementById('next-question').addEventListener('click', () => {
+            currentDifficulty = document.getElementById('difficulty').value;
+            displayQuestion();
+        });
+    </script>
+</body>
+</html>
